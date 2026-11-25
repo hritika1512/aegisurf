@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegisurf Final Quiz &amp; Certificate Eligibility</title>
+    <link rel="stylesheet" href="course.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .quiz-layout {
+            padding: 36px 60px 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+            flex: 1;
+        }
+
+        .quiz-header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            font-style: italic;
+            line-height: 1.12;
+            margin-bottom: 10px;
+            text-shadow: 0 3px 12px rgba(20, 10, 65, 0.75);
+        }
+
+        .quiz-header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            max-width: 780px;
+            line-height: 1.65;
+        }
+
+        .candidate-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            background: rgba(16, 9, 52, 0.42);
+            border: 1.5px solid rgba(255, 255, 255, 0.55);
+            border-radius: 18px;
+            padding: 18px 24px;
+        }
+
+        .candidate-box label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #99ecff;
+        }
+
+        .candidate-box input {
+            flex: 1;
+            min-width: 220px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            border: 1.5px solid rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .candidate-box input::placeholder {
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .question-card {
+            background: linear-gradient(
+                160deg,
+                rgba(255, 255, 255, 0.24) 0%,
+                rgba(145, 110, 255, 0.14) 55%,
+                rgba(0, 195, 255, 0.18) 100%
+            );
+            border: 1.5px solid rgba(255, 255, 255, 0.65);
+            border-radius: 22px;
+            padding: 24px 28px;
+            box-shadow:
+                0 14px 30px rgba(20, 10, 65, 0.38),
+                inset 0 1.5px 1.5px rgba(255, 255, 255, 0.75);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .question-title {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 16px;
+            border-radius: 14px;
+            background: rgba(16, 9, 52, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+            font-size: 14.5px;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .option-item:hover {
+            background: rgba(0, 195, 255, 0.22);
+            border-color: #99eeff;
+        }
+
+        .option-item input {
+            accent-color: #26baff;
+            cursor: pointer;
+        }
+
+        .result-panel {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+            background: rgba(16, 9, 52, 0.55);
+            border: 1.5px solid #99eeff;
+            border-radius: 22px;
+            padding: 24px 28px;
+        }
+
+        .result-panel.visible {
+            display: flex;
+        }
+
+        .certificate-card {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            padding: 24px;
+            border-radius: 18px;
+            background: linear-gradient(
+                135deg,
+                rgba(153, 236, 255, 0.22),
+                rgba(153, 0, 255, 0.22)
+            );
+            border: 1.5px solid #ffffff;
+            text-align: center;
+        }
+
+        .certificate-card.visible {
+            display: flex;
+        }
+
+        .certificate-card h3 {
+            font-size: 24px;
+            color: #99ecff;
+        }
+
+        @media (max-width: 960px) {
+            .quiz-layout {
+                padding: 24px;
+            }
+
+            .quiz-header h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media print {
+            body {
+                background: #ffffff;
+                color: #000000;
+                padding: 0;
+            }
+
+            .navbar,
+            .quiz-header,
+            .candidate-box,
+            #quiz-form,
+            .course-footer-bar {
+                display: none !important;
+            }
+
+            .page-container {
+                box-shadow: none;
+                border: none;
+                background: #ffffff;
+            }
+
+            .result-panel,
+            .certificate-card {
+                display: flex !important;
+                color: #000000;
+                background: #ffffff;
+                border: 2px solid #000000;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- Top Navigation -->
+        <header class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="Aegisurf Logo">
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="getstarted.html">Get Started</a>
+                <a href="course.html">Course</a>
+                <a href="learn-more.html">Certificate Guide</a>
+            </nav>
+            <div class="nav-right">
+                <a href="#" class="btn-signup">Sign Up</a>
+                <button class="menu-dots" type="button" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Quiz Content -->
+        <main class="quiz-layout">
+            <div class="quiz-header">
+                <h1>Aegisurf Final Knowledge Quiz</h1>
+                <p>Answer all 5 questions below. You need a score of <strong>80% or higher</strong> (at least 4 out of 5) with your name entered to qualify for your completion certificate.</p>
+            </div>
+
+            <div class="candidate-box">
+                <label for="learner-name">Your Full Name (for Certificate):</label>
+                <input id="learner-name" type="text" placeholder="Enter your full name">
+            </div>
+
+            <form id="quiz-form" class="options-list">
+                <!-- Question 1 -->
+                <div class="question-card">
+                    <p class="question-title">1. What is "credential stuffing"?</p>
+                    <div class="options-list">
+                        <label class="option-item">
+                            <input type="radio" name="q1" value="a">
+                            <span>Using leaked email-and-password pairs from one breach to test logins on other sites</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q1" value="b">
+                            <span>Saving backup recovery codes inside a text file on a public computer</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q1" value="c">
+                            <span>Installing automatic browser security updates</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="question-card">
+                    <p class="question-title">2. You get an urgent message claiming your account will be closed in 12 hours unless you click its link. What is the safest move?</p>
+                    <div class="options-list">
+                        <label class="option-item">
+                            <input type="radio" name="q2" value="a">
+                            <span>Click the link right away so your account isn't suspended</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q2" value="b">
+                            <span>Ignore the message link and check your account via a saved bookmark or official site</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q2" value="c">
+                            <span>Reply with your current password to confirm your identity</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="question-card">
+                    <p class="question-title">3. Which password and multi-factor practice offers stronger protection?</p>
+                    <div class="options-list">
+                        <label class="option-item">
+                            <input type="radio" name="q3" value="a">
+                            <span>Reusing one short password across all accounts with no 2FA</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q3" value="b">
+                            <span>Using unique passwords with a password manager plus an authenticator app or passkey</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q3" value="c">
+                            <span>Sharing your one-time login code with anyone who calls asking for help</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="question-card">
+                    <p class="question-title">4. Why is keeping your browser, apps, and operating system updated important?</p>
+                    <div class="options-list">
+                        <label class="option-item">
+                            <input type="radio" name="q4" value="a">
+                            <span>Updates patch newly discovered security vulnerabilities that attackers target</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q4" value="b">
+                            <span>Updates disable HTTPS encryption on websites</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q4" value="c">
+                            <span>Updates make phishing emails impossible to receive</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="question-card">
+                    <p class="question-title">5. What minimum score is required to be eligible for the Aegisurf completion certificate?</p>
+                    <div class="options-list">
+                        <label class="option-item">
+                            <input type="radio" name="q5" value="a">
+                            <span>40%</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q5" value="b">
+                            <span>80% or higher</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="radio" name="q5" value="c">
+                            <span>No quiz score is needed</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 12px;">
+                    <button type="submit" class="btn-start-course">
+                        <span>Submit Quiz</span>
+                        <span class="arrow-orb">▶</span>
+                    </button>
+                    <button type="button" id="reset-quiz-btn" class="btn-secondary">Reset Answers</button>
+                </div>
+            </form>
+
+            <!-- Score & Certificate Result -->
+            <section id="result-panel" class="result-panel" aria-live="polite">
+                <h2 id="score-heading"></h2>
+                <p id="score-feedback"></p>
+
+                <div id="certificate-card" class="certificate-card">
+                    <span>AEGISURF CERTIFICATE OF COMPLETION</span>
+                    <h3 id="cert-recipient"></h3>
+                    <p>Has successfully completed the Aegisurf Online Safety Course and passed the final assessment.</p>
+                    <div style="margin-top: 8px;">
+                        <button type="button" id="print-cert-btn" class="btn-secondary">Print / Save Certificate</button>
+                    </div>
+                </div>
+            </section>
+
+            <div class="course-footer-bar">
+                <a href="course.html" class="btn-secondary">← Back to Course</a>
+                <a href="learn-more.html" class="btn-secondary">View Certificate Rules</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const ANSWER_KEY = {
+            q1: 'a',
+            q2: 'b',
+            q3: 'b',
+            q4: 'a',
+            q5: 'b'
+        };
+
+        const quizForm = document.getElementById('quiz-form');
+        const resetBtn = document.getElementById('reset-quiz-btn');
+        const resultPanel = document.getElementById('result-panel');
+        const scoreHeading = document.getElementById('score-heading');
+        const scoreFeedback = document.getElementById('score-feedback');
+        const certificateCard = document.getElementById('certificate-card');
+        const certRecipient = document.getElementById('cert-recipient');
+        const nameInput = document.getElementById('learner-name');
+        const printCertBtn = document.getElementById('print-cert-btn');
+
+        quizForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const totalQuestions = Object.keys(ANSWER_KEY).length;
+            let correctCount = 0;
+
+            for (const [questionName, correctAnswer] of Object.entries(ANSWER_KEY)) {
+                const selected = quizForm.querySelector(`input[name="${questionName}"]:checked`);
+                if (selected && selected.value === correctAnswer) {
+                    correctCount += 1;
+                }
+            }
+
+            const percentage = Math.round((correctCount / totalQuestions) * 100);
+            const passed = percentage >= 80;
+            const learnerName = nameInput.value.trim();
+
+            resultPanel.classList.add('visible');
+            scoreHeading.textContent = `Your Score: ${percentage}% (${correctCount} / ${totalQuestions})`;
+
+            if (passed && learnerName) {
+                scoreFeedback.textContent = 'Congratulations! You met the 80% requirement and qualify for your completion certificate.';
+                certRecipient.textContent = learnerName;
+                certificateCard.classList.add('visible');
+            } else if (passed && !learnerName) {
+                scoreFeedback.textContent = 'You scored 80% or higher! Enter your full name above and click Submit Quiz again to generate your certificate.';
+                certificateCard.classList.remove('visible');
+            } else {
+                scoreFeedback.textContent = 'You need at least 80% (4 out of 5) to earn the certificate. Review the course sections and try again.';
+                certificateCard.classList.remove('visible');
+            }
+
+            resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        resetBtn.addEventListener('click', () => {
+            quizForm.reset();
+            resultPanel.classList.remove('visible');
+            certificateCard.classList.remove('visible');
+        });
+
+        printCertBtn.addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+        orientation: 'landscape',
+        unit: 'pt',
+        format: 'a4'
+    });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const recipient = (certRecipient.textContent || nameInput.value || 'Aegisurf Learner').trim();
+    const scoreLine = scoreHeading.textContent.trim();
+    const issuedDate = new Date().toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+
+    // Background & Border
+    doc.setFillColor(248, 250, 252);
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+
+    doc.setDrawColor(2, 132, 199);
+    doc.setLineWidth(4);
+    doc.rect(32, 32, pageWidth - 64, pageHeight - 64);
+
+    doc.setDrawColor(124, 58, 237);
+    doc.setLineWidth(1.2);
+    doc.rect(42, 42, pageWidth - 84, pageHeight - 84);
+
+    // Header
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(2, 132, 199);
+    doc.text('AEGISURF  •  ONLINE SAFETY & CYBERSECURITY', pageWidth / 2, 115, { align: 'center' });
+
+    doc.setFontSize(32);
+    doc.setTextColor(15, 23, 42);
+    doc.text('Certificate of Completion', pageWidth / 2, 165, { align: 'center' });
+
+    // Body
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(15);
+    doc.setTextColor(71, 85, 105);
+    doc.text('This certifies that', pageWidth / 2, 220, { align: 'center' });
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(30);
+    doc.setTextColor(76, 29, 149);
+    doc.text(recipient, pageWidth / 2, 272, { align: 'center' });
+
+    // Divider line under name
+    doc.setDrawColor(203, 213, 225);
+    doc.setLineWidth(1.5);
+    doc.line(pageWidth / 2 - 170, 288, pageWidth / 2 + 170, 288);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(15);
+    doc.setTextColor(51, 65, 85);
+    doc.text(
+        'has successfully completed the Aegisurf Online Safety Course and passed the final assessment.',
+        pageWidth / 2,
+        335,
+        { align: 'center', maxWidth: 620 }
+    );
+
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.setTextColor(2, 132, 199);
+    if (scoreLine) {
+        doc.text(scoreLine, pageWidth / 2, 395, { align: 'center' });
+    }
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(12);
+    doc.setTextColor(100, 116, 139);
+    doc.text(`Issued on ${issuedDate}`, pageWidth / 2, 425, { align: 'center' });
+
+    // Trigger direct PDF download
+    const safeFilename = recipient.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'learner';
+    doc.save(`aegisurf-certificate-${safeFilename}.pdf`);
+});
+    </script>
+
+</body>
+</html>

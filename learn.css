@@ -1,0 +1,287 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Frutiger', 'Inter', sans-serif;
+}
+
+body {
+    /* Luminous Purple-to-Bright-Blue Aurora Backdrop */
+    background:
+        linear-gradient(155deg, #000c50 0%, #341d4b 50%, #4e006d 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 16px;
+}
+
+/* Main Frosted Glass Window */
+.page-container {
+    width: 95%;
+    max-width: 1400px;
+    min-height: 85vh;
+    border-radius: 28px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* Aero Glass Surface & Specular Bevels */
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.32) 0%,
+        rgba(145, 110, 255, 0.22) 50%,
+        rgba(0, 195, 255, 0.28) 100%
+    );
+    backdrop-filter: blur(18px) saturate(175%);
+    -webkit-backdrop-filter: blur(18px) saturate(175%);
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    box-shadow:
+        0 25px 50px rgba(20, 10, 65, 0.45),
+        0 0 25px rgba(100, 180, 255, 0.3),
+        inset 0 2px 2px rgba(255, 255, 255, 0.95),
+        inset 0 -3px 10px rgba(110, 70, 255, 0.35);
+    overflow: hidden;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 26px 60px;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.28) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(20, 10, 65, 0.65);
+}
+
+.logo a {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 2px 5px rgba(20, 10, 65, 0.45));
+}
+
+.nav-links {
+    display: flex;
+    gap: 16px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 25px;
+    border: 1px solid transparent;
+    text-shadow: 0 1px 3px rgba(20, 10, 65, 0.65);
+    transition: all 0.25s ease;
+}
+
+.nav-links a.active {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.88) 0%,
+        rgba(130, 235, 255, 0.65) 48%,
+        rgba(0, 185, 255, 0.7) 52%,
+        rgba(165, 245, 255, 0.85) 100%
+    );
+    border-color: #ffffff;
+    box-shadow:
+        0 0 16px rgba(80, 225, 255, 0.85),
+        inset 0 1px 2px #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 55, 100, 0.75);
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.88) 0%,
+        rgba(153, 0, 255, 0.65) 48%,
+        rgba(139, 37, 255, 0.7) 52%,
+        rgba(255, 49, 210, 0.85) 100%
+    );
+    border-color: #ffffff;
+    box-shadow:
+        0 0 16px rgba(76, 0, 255, 0.85),
+        inset 0 1px 2px #ffffff;
+    text-shadow: 0 1px 2px rgba(43, 0, 100, 0.75);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Tactile Aqua-Blue Gel Sign-Up Button */
+.btn-signup {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    border: 1px solid #99eeff;
+    text-shadow: 0 1px 2px rgba(0, 45, 95, 0.75);
+    background: linear-gradient(
+        180deg,
+        #99ecff 0%,
+        #26baff 49%,
+        #0084e6 51%,
+        #38c4ff 100%
+    );
+    box-shadow:
+        0 4px 12px rgba(0, 130, 230, 0.5),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.95);
+    transition: filter 0.2s ease, transform 0.1s ease;
+}
+
+.btn-signup:hover {
+    filter: brightness(1.1);
+    box-shadow:
+        0 0 18px rgba(70, 215, 255, 0.85),
+        inset 0 1.5px 1px rgba(255, 255, 255, 0.95);
+}
+
+.menu-dots {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.15));
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    padding: 10px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    box-shadow: 0 4px 10px rgba(20, 10, 65, 0.25), inset 0 1px 1px #ffffff;
+    transition: transform 0.2s ease;
+}
+
+.menu-dots:hover {
+    transform: scale(1.1);
+}
+
+.menu-dots span {
+    width: 4px;
+    height: 4px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(20, 10, 65, 0.5);
+}
+
+/* Learn More Walkthrough Layout */
+.guide-content {
+    padding: 36px 60px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    flex: 1;
+}
+
+.guide-header {
+    max-width: 760px;
+}
+
+.guide-header h2 {
+    font-size: 26px;
+    font-weight: 400;
+    font-style: italic;
+    color: #99ecff;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 6px rgba(20, 10, 65, 0.7);
+}
+
+.guide-header h1 {
+    font-size: 46px;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.12;
+    margin-bottom: 14px;
+    text-shadow: 0 3px 12px rgba(20, 10, 65, 0.75);
+}
+
+.guide-header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 15px;
+    line-height: 1.65;
+    text-shadow: 0 1px 3px rgba(20, 10, 65, 0.65);
+}
+
+/* Glossy Glass Video Frame */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 880px;
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(12, 8, 42, 0.65);
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    box-shadow:
+        0 18px 36px rgba(20, 10, 65, 0.5),
+        0 0 20px rgba(100, 180, 255, 0.25),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.75);
+}
+
+.video-wrapper iframe,
+.video-wrapper video {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* 3-Column Aero Glass Cards */
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.step-card {
+    background: linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.24) 0%,
+        rgba(145, 110, 255, 0.14) 55%,
+        rgba(0, 195, 255, 0.18) 100%
+    );
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    border-radius: 20px;
+    padding: 24px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        0 12px 26px rgba(20, 10, 65, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.7);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-3px);
+    border-color: #99eeff;
+    box-shadow:
+        0 16px 32px rgba(20, 10, 65, 0.45),
+        0 0 18px rgba(100, 180, 255, 0.35),
+        inset 0 1.5px 1.5px rgba(255, 255, 255, 0.75);
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegisurf Certificate of Completion</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Inter, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f1f5f9;
+            color: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+            gap: 20px;
+        }
+
+        .cert-sheet {
+            width: 100%;
+            max-width: 820px;
+            background: #ffffff;
+            border: 3px solid #0284c7;
+            border-radius: 16px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cert-label {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #0284c7;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #0f172a;
+        }
+
+        .recipient-name {
+            font-size: 36px;
+            font-weight: 700;
+            color: #4c1d95;
+            padding: 10px 0;
+            border-bottom: 1.5px solid #cbd5e1;
+            display: inline-block;
+            margin: 0 auto;
+            min-width: 280px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #334155;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .meta-line {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 8px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button, a.back-link {
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: 1px solid #0284c7;
+        }
+
+        button {
+            background: #0284c7;
+            color: #ffffff;
+        }
+
+        a.back-link {
+            background: #ffffff;
+            color: #0284c7;
+        }
+
+        @page {
+            size: landscape;
+            margin: 18mm;
+        }
+
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+            }
+
+            .actions {
+                display: none;
+            }
+
+            .cert-sheet {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article class="cert-sheet">
+        <span class="cert-label">Aegisurf • Online Safety &amp; Cybersecurity</span>
+        <h1>Certificate of Completion</h1>
+        <p>This certifies that</p>
+        <div id="cert-name" class="recipient-name">Participant</div>
+        <p>has completed the Aegisurf Online Safety Course modules and passed the final assessment.</p>
+        <div id="cert-score" class="meta-line"></div>
+        <div id="cert-date" class="meta-line"></div>
+    </article>
+
+    <div class="actions">
+        <button type="button" id="savePdfBtn">Save as PDF / Print</button>
+        <a href="quiz.html" class="back-link">← Back to Quiz</a>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get('name') || 'Aegisurf Learner';
+        const score = params.get('score') || '';
+
+        document.getElementById('cert-name').textContent = name;
+        if (score) {
+            document.getElementById('cert-score').textContent = score;
+        }
+        document.getElementById('cert-date').textContent =
+            `Issued on ${new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}`;
+
+        const savePdfBtn = document.getElementById('savePdfBtn');
+        savePdfBtn.addEventListener('click', () => window.print());
+
+        window.addEventListener('load', () => {
+            setTimeout(() => window.print(), 250);
+        });
+    </script>
+</body>
+</html>
